@@ -3,8 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Movie-Project</title>
+    <style>
+        #add-movie-form {
+            border: 1px solid black;
+            padding: 3px;
+        }
+    </style>
 </head>
 <body>
+<h1>Movies</h1>
+
+<!--Form for adding movies to database-->
+<form id="add-movie-form">
+    <h3>Add movie:</h3>
+    <label for="movie-title-input">Title:</label>
+    <input id='movie-title-input' type="text" placeholder="movie title">
+    <br>
+    <br>
+    <div>
+        <label>Rating:</label>
+        <label for="1">1</label>
+        <input id="1" name="rating" type="radio">
+        <label for="2">2</label>
+        <input id="2" name="rating" type="radio">
+        <label for="3">3</label>
+        <input id="3" name="rating" type="radio">
+        <label for="4">4</label>
+        <input id="4" name="rating" type="radio">
+        <label for="5">5</label>
+        <input id="5" name="rating" type="radio">
+    </div>
+    <br>
+    <br>
+    <button id="add-movie-btn" type="submit">Add movie</button>
+
+</form>
+
+
+<!--    Container that displays movies-->
+
+    <div id="movie-container">
+
+
+    </div>
+
+
+
+
+<!--------------js below--------------------->
 <script src="https://code.jquery.com/jquery-2.2.4.js"
         integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
         crossorigin="anonymous">
