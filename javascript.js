@@ -1,17 +1,44 @@
 const moviesURL = 'https://chestnut-endurable-ixia.glitch.me/movies';
+
 fetch(moviesURL).then(response => response.json()).then(movies => console.log(movies));
+
+function deleteMovie(event) {
+// Make the HTTP Delete call using fetch api
+    console.log(event.target.value)
+    const deleteMethod = {
+        method: 'DELETE', // Method itself
+        headers: {
+            'Content-type': 'application/json' // Indicates the content
+        }
+    }
+    fetch(moviesURL + "/" + event.target.value, deleteMethod)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            displayMovies();
+        }) // Manipulate the data retrieved back, if we want to do something with it
+        .catch(err => console.log(err)) // Do something with the error}
+    ;
+}
+
 function displayMovies() {
-    fetch('https://chestnut-endurable-ixia.glitch.me/movies')
+    fetch(moviesURL)
         .then(response => response.json())
         // .then(console.log)
         .then(movies => {
             let html = "";
             movies.forEach(function (element) {
                 html +=
-                    "<div>" + element.title + "</div>" +
-                    "<div>" + element.rating + "</div>";
+                    "<div>Title: " + element.title + "</div>" +
+                    "<div>Rating: " + element.rating + "</div>" +
+                    "<div>ID: " + element.id + "</div>" +
+                    "<button class='edit' value='" + element.id + "'>Edit</button>" +
+                    "<button  class='delete' value='" + element.id + "'>Delete</button>" +
+                    "<hr>";
                 $("#movie-container").html(html);
             })
+            $('.delete').click(deleteMovie);
+            $('.edit').click(editMovie);
         })
 }
 displayMovies();
@@ -29,6 +56,7 @@ let newMovieTitle
 
 
 const addMovieButton = $("#add-movie-btn");
+const deleteMovieButton = $(".delete")
 
 
 function addMovie(e){
@@ -36,7 +64,7 @@ function addMovie(e){
     console.log("Add movie button works!")
     runRate()
     const newMovie = {title: newMovieTitle, rating: newMovieRating};
-    const url = "https://chestnut-endurable-ixia.glitch.me/movies";
+    const url = moviesURL;
     const options = {
         method: 'POST',
         headers: {
@@ -46,41 +74,38 @@ function addMovie(e){
     };
     fetch(url, options)
         .then(displayMovies)
-        .catch(alert("Post request rejected."));
+        .catch(() => alert("Post rejected."));
 }
 
 addMovieButton.click(addMovie);
 
 
-// function editMovie() {
-//     const editMethod = 'PUT'
-//         method:
-//     }
-// }
-
-
-
-
-
-
-function deleteMovie() {
-// Make the HTTP Delete call using fetch api
+function editMovie(e){
+    e.preventDefault();
+    $("h3").text("Edit movie:");
+    console.log("Edit movie button works!");
+    runRate();
+    const newMovie = {title: newMovieTitle, rating: newMovieRating};
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newMovie),
+    };
+    fetch(moviesURL + "/" + e.target.value, options)
+        .then(displayMovies)
+        .catch(() => alert("Post rejected."));
 }
 
 
-const deleteMovieButton = $("#delete-movie-btn")
 
-deleteMovieButton.click(deleteMovie);
 
-    const deleteMethod = {
-        method: 'DELETE', // Method itself
-        headers: {
-            'Content-type': 'application/json' // Indicates the content
-        }
-    }
-    fetch("https://chestnut-endurable-ixia.glitch.me/movies/5", deleteMethod)
-        .then(response => response.json())
-        .then(data => console.log(data)) // Manipulate the data retrieved back, if we want to do something with it
-        .catch(err => console.log(err)) // Do something with the error}
+
+
+
+
+
+
 
 
