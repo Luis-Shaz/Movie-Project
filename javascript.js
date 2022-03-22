@@ -1,14 +1,16 @@
-const movieContainer = $("#movie-container")
-
 const movies = fetch('db.json')
     .then(response => response.json())
     .then(response => {
+        let html = "";
         response.movies.forEach(function(element){
-            movieContainer.html(
-                `<div> ${element.title} </div>`);
+            html +=
+                "<div>" + element.title + "</div>" +
+                "<div>" + element.rating + "</div>";
+            $("#movie-container").html(html);
         })
-
     })
+
+
 
 // function addMovie(){
 //     e.preventDefault()
