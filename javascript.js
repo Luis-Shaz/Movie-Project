@@ -1,4 +1,5 @@
-
+const moviesURL = 'https://chestnut-endurable-ixia.glitch.me/movies';
+fetch(moviesURL).then(response => response.json()).then(movies => console.log(movies));
 function displayMovies() {
     fetch('https://chestnut-endurable-ixia.glitch.me/movies')
         .then(response => response.json())
@@ -15,29 +16,26 @@ function displayMovies() {
 }
 displayMovies();
 
-const ratingButtons = document.getElementsByName('rating');
-let newMovieRating
-
-function runLoop() {
-    ratingButtons.forEach(element => {
-        if (element.checked) {
-            console.log(element.value)
-            newMovieRating = element.value;
-        }
-    })
+function runRate() {
+    newMovieRating = $('input[name="rating"]:checked').val();
+    newMovieTitle = $("#movie-title-input").val();
+    console.log(newMovieRating);
 }
-runLoop();
+
+
+let newMovieRating
+let newMovieTitle
 
 
 
 const addMovieButton = $("#add-movie-btn");
-const newMovieTitle = $("#movie-title-input").val();
 
 
 function addMovie(e){
     e.preventDefault();
     console.log("Add movie button works!")
-    const newMovie = {title: newMovieTitle, rating: 5};
+    runRate()
+    const newMovie = {title: newMovieTitle, rating: newMovieRating};
     const url = "https://chestnut-endurable-ixia.glitch.me/movies";
     const options = {
         method: 'POST',
@@ -52,4 +50,37 @@ function addMovie(e){
 }
 
 addMovieButton.click(addMovie);
+
+
+// function editMovie() {
+//     const editMethod = 'PUT'
+//         method:
+//     }
+// }
+
+
+
+
+
+
+function deleteMovie() {
+// Make the HTTP Delete call using fetch api
+}
+
+
+const deleteMovieButton = $("#delete-movie-btn")
+
+deleteMovieButton.click(deleteMovie);
+
+    const deleteMethod = {
+        method: 'DELETE', // Method itself
+        headers: {
+            'Content-type': 'application/json' // Indicates the content
+        }
+    }
+    fetch("https://chestnut-endurable-ixia.glitch.me/movies/5", deleteMethod)
+        .then(response => response.json())
+        .then(data => console.log(data)) // Manipulate the data retrieved back, if we want to do something with it
+        .catch(err => console.log(err)) // Do something with the error}
+
 
