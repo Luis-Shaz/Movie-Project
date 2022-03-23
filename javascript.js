@@ -38,7 +38,7 @@ function displayMovies() {
                 $("#movie-container").html(html);
             })
             $('.delete').click(deleteMovie);
-            $('.edit').click(editMovie);
+            $('.edit').click(prepareForm);
         })
 }
 displayMovies();
@@ -82,7 +82,6 @@ addMovieButton.click(addMovie);
 
 function editMovie(e){
     e.preventDefault();
-    $("h3").text("Edit movie:");
     console.log("Edit movie button works!");
     runRate();
     const newMovie = {title: newMovieTitle, rating: newMovieRating};
@@ -96,7 +95,22 @@ function editMovie(e){
     fetch(moviesURL + "/" + e.target.value, options)
         .then(displayMovies)
         .catch(() => alert("Post rejected."));
+    $("#save-changes-btn").css("visibility", "hidden")
 }
+
+
+function prepareForm(e){
+    e.preventDefault();
+    $("h3").text("Edit movie:");
+    console.log("Prepare the form");
+    // $("#movie-title-input").text("")
+    $("#save-changes-btn").css("visibility", "visible")
+    $("#save-changes-btn").val(e.target.value);
+    $("#add-movie-btn").css("visibility", "hidden")
+}
+
+$("#save-changes-btn").click(editMovie);
+
 
 
 
